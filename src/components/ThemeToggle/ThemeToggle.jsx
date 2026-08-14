@@ -40,6 +40,7 @@ function ThemeToggle() {
 
   return (
     <button
+      type="button"
       className="theme-toggle"
       onClick={toggleTheme}
       aria-label={
@@ -49,36 +50,22 @@ function ThemeToggle() {
       }
       title={
         theme === "dark"
-          ? "Light mode"
-          : "Dark mode"
+          ? "Switch to light mode"
+          : "Switch to dark mode"
       }
     >
-      <span className="theme-toggle__track">
-        <span
-          className={`theme-toggle__indicator ${
-            theme === "light"
-              ? "theme-toggle__indicator--light"
-              : ""
-          }`}
-        >
-          {theme === "dark" ? (
-            <Moon size={14} strokeWidth={1.8} />
-          ) : (
-            <Sun size={14} strokeWidth={1.8} />
-          )}
-        </span>
-
-        <Sun
-          className="theme-toggle__sun"
-          size={13}
-          strokeWidth={1.7}
-        />
-
-        <Moon
-          className="theme-toggle__moon"
-          size={13}
-          strokeWidth={1.7}
-        />
+      <span className="theme-toggle__icon">
+        {theme === "dark" ? (
+          <Sun
+            size={19}
+            strokeWidth={1.8}
+          />
+        ) : (
+          <Moon
+            size={19}
+            strokeWidth={1.8}
+          />
+        )}
       </span>
     </button>
   );

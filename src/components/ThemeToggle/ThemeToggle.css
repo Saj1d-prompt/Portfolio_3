@@ -1,56 +1,57 @@
+/* =========================================================
+   THEME TOGGLE
+========================================================= */
+
 .theme-toggle {
+  width: 44px;
+  height: 44px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  cursor: pointer;
-}
+  flex-shrink: 0;
 
-.theme-toggle__track {
-  width: 60px;
-  height: 32px;
-
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding-inline: 8px;
+  padding: 0;
 
   border: 1px solid var(--border-primary);
 
-  border-radius: 100px;
+  border-radius: 50%;
 
   background: var(--bg-secondary);
 
-  color: var(--text-muted);
+  color: var(--text-primary);
+
+  cursor: pointer;
 
   transition:
     background var(--transition-normal),
-    border-color var(--transition-normal);
+    border-color var(--transition-normal),
+    color var(--transition-normal),
+    transform var(--transition-normal);
 }
 
-.theme-toggle:hover .theme-toggle__track {
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.theme-toggle:hover {
   border-color: var(--accent);
+
+  background: var(--accent-soft);
+
+  transform: rotate(8deg);
 }
 
-.theme-toggle__sun,
-.theme-toggle__moon {
-  position: relative;
 
-  z-index: 1;
-}
+/* =========================================================
+   ICON
+========================================================= */
 
-.theme-toggle__indicator {
-  position: absolute;
-
-  z-index: 2;
-
-  width: 24px;
-  height: 24px;
-
-  left: 3px;
+.theme-toggle__icon {
+  width: 30px;
+  height: 30px;
 
   display: flex;
   align-items: center;
@@ -58,33 +59,60 @@
 
   border-radius: 50%;
 
-  background: var(--accent);
-  color: var(--accent-contrast);
-
-  box-shadow:
-    0 5px 18px
-    var(--shadow-color);
+  color: var(--accent);
 
   transition:
-    transform 350ms
-    cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.theme-toggle__indicator--light {
-  transform: translateX(28px);
+    color var(--transition-normal),
+    background var(--transition-normal),
+    transform var(--transition-normal);
 }
 
 
-/* =========================
+.theme-toggle:hover .theme-toggle__icon {
+  transform: rotate(-16deg);
+}
+
+
+/* =========================================================
+   LIGHT MODE
+========================================================= */
+
+html[data-theme="light"] .theme-toggle {
+  background: var(--bg-secondary);
+
+  color: var(--text-primary);
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+html[data-theme="dark"] .theme-toggle {
+  background: var(--bg-secondary);
+
+  color: var(--text-primary);
+}
+
+
+/* =========================================================
+   ACTIVE
+========================================================= */
+
+.theme-toggle:active {
+  transform: scale(0.92);
+}
+
+
+/* =========================================================
    MOBILE
-========================== */
+========================================================= */
 
 @media (max-width: 800px) {
-  .theme-toggle__track {
-    width: 56px;
+
+  .theme-toggle {
+    width: 42px;
+    height: 42px;
   }
 
-  .theme-toggle__indicator--light {
-    transform: translateX(24px);
-  }
 }
