@@ -1,4 +1,18 @@
 import { useState } from "react";
+
+import {
+  BriefcaseBusiness,
+  UserRound,
+  Clock3,
+  Mail,
+  FileText,
+  Menu,
+  X,
+  ArrowUpRight,
+} from "lucide-react";
+
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
+
 import "./Navbar.css";
 
 function Navbar() {
@@ -12,37 +26,100 @@ function Navbar() {
     <header className="navbar">
       <div className="navbar__inner">
 
+        {/* =========================
+            BRAND
+        ========================== */}
+
         <a
           href="#home"
           className="navbar__brand"
           onClick={closeMenu}
           aria-label="Go to homepage"
         >
-          <span className="navbar__brand-main">S</span>
-          <span className="navbar__brand-slash">/</span>
-          <span className="navbar__brand-number">01</span>
+          <span className="navbar__brand-main">
+            S
+          </span>
+
+          <span className="navbar__brand-slash">
+            /
+          </span>
+
+          <span className="navbar__brand-number">
+            01
+          </span>
         </a>
+
+
+        {/* =========================
+            DESKTOP / MOBILE NAV
+        ========================== */}
 
         <nav
           className={`navbar__nav ${
-            menuOpen ? "navbar__nav--open" : ""
+            menuOpen
+              ? "navbar__nav--open"
+              : ""
           }`}
         >
-          <a href="#work" onClick={closeMenu}>
-            Work
+          <a
+            href="#work"
+            onClick={closeMenu}
+          >
+            <BriefcaseBusiness
+              size={15}
+              strokeWidth={1.7}
+            />
+
+            <span>
+              Work
+            </span>
           </a>
 
-          <a href="#profile" onClick={closeMenu}>
-            Profile
+
+          <a
+            href="#profile"
+            onClick={closeMenu}
+          >
+            <UserRound
+              size={15}
+              strokeWidth={1.7}
+            />
+
+            <span>
+              Profile
+            </span>
           </a>
 
-          <a href="#experience" onClick={closeMenu}>
-            Experience
+
+          <a
+            href="#experience"
+            onClick={closeMenu}
+          >
+            <Clock3
+              size={15}
+              strokeWidth={1.7}
+            />
+
+            <span>
+              Experience
+            </span>
           </a>
 
-          <a href="#contact" onClick={closeMenu}>
-            Contact
+
+          <a
+            href="#contact"
+            onClick={closeMenu}
+          >
+            <Mail
+              size={15}
+              strokeWidth={1.7}
+            />
+
+            <span>
+              Contact
+            </span>
           </a>
+
 
           <a
             href="/Sajid-Ul-Islam-CV.pdf"
@@ -51,22 +128,57 @@ function Navbar() {
             rel="noreferrer"
             onClick={closeMenu}
           >
-            Résumé
-            <span>↗</span>
+            <FileText
+              size={15}
+              strokeWidth={1.7}
+            />
+
+            <span>
+              Résumé
+            </span>
+
+            <ArrowUpRight
+              size={14}
+              strokeWidth={1.8}
+              className="navbar__resume-arrow"
+            />
           </a>
         </nav>
 
-        <button
-          className={`navbar__menu-button ${
-            menuOpen ? "navbar__menu-button--active" : ""
-          }`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle navigation"
-          aria-expanded={menuOpen}
-        >
-          <span></span>
-          <span></span>
-        </button>
+
+        {/* =========================
+            RIGHT CONTROLS
+        ========================== */}
+
+        <div className="navbar__controls">
+
+          <ThemeToggle />
+
+
+          <button
+            className="navbar__menu-button"
+            onClick={() =>
+              setMenuOpen(
+                (current) => !current
+              )
+            }
+            aria-label="Toggle navigation"
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? (
+              <X
+                size={22}
+                strokeWidth={1.6}
+              />
+            ) : (
+              <Menu
+                size={22}
+                strokeWidth={1.6}
+              />
+            )}
+          </button>
+
+        </div>
 
       </div>
     </header>

@@ -1,3 +1,7 @@
+/* =========================================================
+   NAVBAR
+========================================================= */
+
 .navbar {
   position: fixed;
 
@@ -8,83 +12,139 @@
 
   z-index: 1000;
 
-  background: rgba(9, 9, 10, 0.82);
+  background:
+    var(--navbar-bg);
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom:
+    1px solid
+    var(--border-primary);
 
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter:
+    blur(20px);
+
+  -webkit-backdrop-filter:
+    blur(20px);
+
+  transition:
+    background var(--transition-slow),
+    border-color var(--transition-slow);
 }
 
+
+/* =========================================================
+   INNER
+========================================================= */
+
 .navbar__inner {
-  min-height: 76px;
+  width: min(
+    calc(
+      100% -
+      (var(--page-padding) * 2)
+    ),
+    var(--container-width)
+  );
+
+  min-height: 82px;
+
+  margin-inline: auto;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  width: min(
-    calc(100% - (var(--page-padding) * 2)),
-    var(--container-width)
-  );
-
-  margin-inline: auto;
+  gap: 24px;
 }
 
 
-/* =========================
+/* =========================================================
    BRAND
-========================== */
+========================================================= */
 
 .navbar__brand {
   display: inline-flex;
   align-items: baseline;
 
-  font-family: var(--font-mono);
-  font-size: 14px;
+  flex-shrink: 0;
 
-  letter-spacing: 0.08em;
+  font-family:
+    var(--font-mono);
+
+  letter-spacing:
+    0.08em;
 }
 
+
 .navbar__brand-main {
-  color: var(--text-primary);
-  font-size: 17px;
+  color:
+    var(--text-primary);
+
+  font-family:
+    var(--font-display);
+
+  font-size: 22px;
+
   font-weight: 700;
 }
 
-.navbar__brand-slash {
-  margin-inline: 4px;
 
-  color: var(--accent);
+.navbar__brand-slash {
+  margin-inline: 5px;
+
+  color:
+    var(--accent);
+
+  font-size: 17px;
+
+  font-weight: 600;
 }
+
 
 .navbar__brand-number {
-  color: var(--text-muted);
+  color:
+    var(--text-muted);
 
   font-size: 11px;
+
+  font-weight: 500;
 }
 
 
-/* =========================
-   NAV LINKS
-========================== */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 .navbar__nav {
   display: flex;
   align-items: center;
 
-  gap: clamp(24px, 3vw, 46px);
+  gap:
+    clamp(20px, 2.2vw, 38px);
+
+  margin-left: auto;
 }
+
 
 .navbar__nav > a {
   position: relative;
 
-  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
 
-  font-family: var(--font-mono);
-  font-size: 11px;
+  gap: 8px;
 
-  letter-spacing: 0.12em;
+  color:
+    var(--text-secondary);
+
+  font-family:
+    var(--font-mono);
+
+  font-size: 12px;
+
+  font-weight: 500;
+
+  letter-spacing:
+    0.07em;
+
   text-transform: uppercase;
 
   transition:
@@ -92,118 +152,199 @@
     transform var(--transition-fast);
 }
 
-.navbar__nav > a:not(.navbar__resume)::after {
+
+.navbar__nav > a svg {
+  color:
+    var(--text-muted);
+
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+
+.navbar__nav
+> a:not(.navbar__resume)::after {
   content: "";
 
   position: absolute;
 
   left: 0;
-  bottom: -7px;
+  bottom: -9px;
 
   width: 0;
   height: 1px;
 
-  background: var(--accent);
+  background:
+    var(--accent);
 
-  transition: width var(--transition-normal);
+  transition:
+    width var(--transition-normal);
 }
+
 
 .navbar__nav > a:hover {
-  color: var(--text-primary);
+  color:
+    var(--text-primary);
 }
 
-.navbar__nav > a:hover::after {
+
+.navbar__nav > a:hover svg {
+  color:
+    var(--accent);
+
+  transform:
+    translateY(-1px);
+}
+
+
+.navbar__nav
+> a:not(.navbar__resume):hover::after {
   width: 100%;
 }
 
 
-/* =========================
-   RESUME
-========================== */
+/* =========================================================
+   RÉSUMÉ BUTTON
+========================================================= */
 
 .navbar__nav .navbar__resume {
-  display: inline-flex;
-  align-items: center;
+  min-height: 44px;
+
+  padding:
+    0 17px;
 
   gap: 8px;
 
-  padding: 10px 16px;
+  border:
+    1px solid
+    var(--border-light);
 
-  border: 1px solid var(--border-light);
+  color:
+    var(--text-primary);
 
-  color: var(--text-primary);
+  font-size: 12px;
+
+  font-weight: 600;
+
+  transition:
+    border-color var(--transition-normal),
+    background var(--transition-normal),
+    transform var(--transition-normal);
 }
 
-.navbar__resume span {
-  color: var(--accent);
-}
 
 .navbar__resume:hover {
-  border-color: var(--accent);
+  border-color:
+    var(--accent);
+
+  background:
+    var(--accent-soft);
+
+  transform:
+    translateY(-2px);
 }
 
 
-/* =========================
-   MOBILE BUTTON
-========================== */
+.navbar__resume-arrow {
+  color:
+    var(--accent) !important;
+}
+
+
+/* =========================================================
+   RIGHT CONTROLS
+========================================================= */
+
+.navbar__controls {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
 
 .navbar__menu-button {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
 
   display: none;
+  align-items: center;
+  justify-content: center;
 
   cursor: pointer;
 
-  position: relative;
-}
+  border:
+    1px solid
+    var(--border-primary);
 
-.navbar__menu-button span {
-  position: absolute;
+  color:
+    var(--text-primary);
 
-  width: 22px;
-  height: 1px;
-
-  left: 10px;
-
-  background: var(--text-primary);
-
-  transition: var(--transition-normal);
-}
-
-.navbar__menu-button span:first-child {
-  top: 16px;
-}
-
-.navbar__menu-button span:last-child {
-  top: 24px;
-}
-
-.navbar__menu-button--active span:first-child {
-  top: 21px;
-
-  transform: rotate(45deg);
-}
-
-.navbar__menu-button--active span:last-child {
-  top: 21px;
-
-  transform: rotate(-45deg);
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast);
 }
 
 
-/* =========================
+.navbar__menu-button:hover {
+  border-color:
+    var(--accent);
+
+  background:
+    var(--accent-soft);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .navbar__nav {
+    gap: 17px;
+  }
+
+
+  .navbar__nav > a {
+    font-size: 11px;
+  }
+
+
+  .navbar__nav .navbar__resume {
+    padding-inline: 13px;
+  }
+
+}
+
+
+/* =========================================================
    MOBILE
-========================== */
+========================================================= */
 
 @media (max-width: 800px) {
+
   .navbar__inner {
     min-height: 68px;
   }
 
-  .navbar__menu-button {
-    display: block;
+
+  .navbar__brand-main {
+    font-size: 20px;
   }
+
+
+  .navbar__menu-button {
+    display: flex;
+  }
+
 
   .navbar__nav {
     position: absolute;
@@ -213,7 +354,8 @@
 
     width: 100%;
 
-    height: calc(100vh - 68px);
+    height:
+      calc(100vh - 68px);
 
     display: flex;
     flex-direction: column;
@@ -221,47 +363,130 @@
 
     gap: 0;
 
+    margin-left: 0;
+
     padding:
       40px
       var(--page-padding);
 
-    background: var(--bg-primary);
+    background:
+      var(--bg-primary);
 
     opacity: 0;
+
     visibility: hidden;
 
-    transform: translateY(-12px);
+    pointer-events: none;
+
+    transform:
+      translateY(-12px);
 
     transition:
       opacity var(--transition-normal),
       visibility var(--transition-normal),
-      transform var(--transition-normal);
+      transform var(--transition-normal),
+      background var(--transition-slow);
   }
+
 
   .navbar__nav--open {
     opacity: 1;
+
     visibility: visible;
 
-    transform: translateY(0);
+    pointer-events: auto;
+
+    transform:
+      translateY(0);
   }
+
 
   .navbar__nav > a {
     width: 100%;
 
-    padding: 22px 0;
+    gap: 14px;
 
-    border-bottom: 1px solid var(--border-primary);
+    padding:
+      22px 0;
 
-    font-size: 16px;
+    border-bottom:
+      1px solid
+      var(--border-primary);
+
+    font-family:
+      var(--font-display);
+
+    font-size: 19px;
+
+    font-weight: 500;
+
+    letter-spacing:
+      -0.01em;
+
+    text-transform: none;
   }
 
-  .navbar__nav .navbar__resume {
-    margin-top: 32px;
 
+  .navbar__nav > a svg {
+    width: 19px;
+    height: 19px;
+  }
+
+
+  .navbar__nav
+  > a:not(.navbar__resume)::after {
+    display: none;
+  }
+
+
+  .navbar__nav
+  .navbar__resume {
     width: auto;
 
-    border: 1px solid var(--border-light);
+    min-height: 52px;
 
-    padding: 15px 20px;
+    margin-top: 32px;
+
+    padding:
+      0 20px;
+
+    border:
+      1px solid
+      var(--border-light);
+
+    font-family:
+      var(--font-mono);
+
+    font-size: 12px;
+
+    text-transform:
+      uppercase;
+
+    letter-spacing:
+      0.08em;
   }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+  .navbar__brand-number {
+    display: none;
+  }
+
+
+  .navbar__brand-slash {
+    margin-right: 0;
+  }
+
+
+  .navbar__controls {
+    gap: 8px;
+  }
+
 }
