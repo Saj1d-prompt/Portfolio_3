@@ -1,4 +1,5 @@
 import Navbar from "./components/Navbar/Navbar";
+import Experience from "./sections/Experience/Experience";
 
 import Hero from "./sections/Hero/Hero";
 import Profile from "./sections/Profile/Profile";
@@ -13,6 +14,7 @@ function App() {
         <Hero />
         <Profile />
         <Work />
+        <Experience />
       </main>
     </>
   );
