@@ -4,6 +4,7 @@ import Experience from "./sections/Experience/Experience";
 
 import Hero from "./sections/Hero/Hero";
 import Profile from "./sections/Profile/Profile";
+import Research from "./sections/Research/Research";
 import Work from "./sections/Work/Work";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Work />
         <Experience />
         <Additional />
+        <Research />
       </main>
     </>
   );
