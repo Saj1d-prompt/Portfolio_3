@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar/Navbar";
 import Additional from "./sections/Additional/Additional";
+import Background from "./sections/Background/Background";
 import Experience from "./sections/Experience/Experience";
 
 import Hero from "./sections/Hero/Hero";
@@ -19,6 +20,7 @@ function App() {
         <Experience />
         <Additional />
         <Research />
+        <Background />
       </main>
     </>
   );
