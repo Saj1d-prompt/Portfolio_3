@@ -1,3 +1,4 @@
+import Footer from "./components/Footer/Footer";
 import Navbar from "./components/Navbar/Navbar";
 import Additional from "./sections/Additional/Additional";
 import Background from "./sections/Background/Background";
@@ -23,6 +24,7 @@ function App() {
         <Research />
         <Background />
         <Contact />
+        <Footer />
       </main>
     </>
   );
