@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   BriefcaseBusiness,
@@ -15,20 +15,229 @@ import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 import "./Navbar.css";
 
+
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const [activeSection, setActiveSection] =
+    useState("home");
+
+  const [scrollProgress, setScrollProgress] =
+    useState(0);
+
+  const [scrolled, setScrolled] =
+    useState(false);
+
+
+  /* =========================================================
+     CLOSE MOBILE MENU
+  ========================================================= */
 
   const closeMenu = () => {
     setMenuOpen(false);
   };
 
+
+  /* =========================================================
+     SECTION + SCROLL TRACKING
+  ========================================================= */
+
+  useEffect(() => {
+    const sectionIds = [
+      "home",
+      "profile",
+      "work",
+      "experience",
+      "contact",
+    ];
+
+    let ticking = false;
+
+
+    const updateNavbar = () => {
+      const scrollY = window.scrollY;
+
+      const documentHeight =
+        document.documentElement.scrollHeight -
+        window.innerHeight;
+
+
+      /* ===============================================
+         SCROLL PROGRESS
+      ================================================ */
+
+      if (documentHeight > 0) {
+        const progress =
+          (scrollY / documentHeight) * 100;
+
+        setScrollProgress(
+          Math.min(
+            Math.max(progress, 0),
+            100
+          )
+        );
+      }
+
+
+      /* ===============================================
+         NAVBAR SCROLLED STATE
+      ================================================ */
+
+      setScrolled(scrollY > 30);
+
+
+      /* ===============================================
+         ACTIVE SECTION
+      ================================================ */
+
+      const markerPosition =
+        scrollY + 180;
+
+      let currentSection = "home";
+
+
+      sectionIds.forEach((sectionId) => {
+        const section =
+          document.getElementById(sectionId);
+
+        if (!section) {
+          return;
+        }
+
+        const sectionTop =
+          section.offsetTop;
+
+        const sectionBottom =
+          sectionTop +
+          section.offsetHeight;
+
+
+        if (
+          markerPosition >= sectionTop &&
+          markerPosition < sectionBottom
+        ) {
+          currentSection =
+            sectionId;
+        }
+      });
+
+
+      /* ===============================================
+         FORCE CONTACT ACTIVE NEAR PAGE END
+      ================================================ */
+
+      const nearBottom =
+        window.innerHeight +
+          window.scrollY >=
+        document.documentElement.scrollHeight -
+          80;
+
+      if (nearBottom) {
+        currentSection =
+          "contact";
+      }
+
+
+      setActiveSection(
+        currentSection
+      );
+
+      ticking = false;
+    };
+
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(
+          updateNavbar
+        );
+
+        ticking = true;
+      }
+    };
+
+
+    updateNavbar();
+
+    window.addEventListener(
+      "scroll",
+      handleScroll,
+      {
+        passive: true,
+      }
+    );
+
+
+    window.addEventListener(
+      "resize",
+      handleScroll
+    );
+
+
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        handleScroll
+      );
+
+      window.removeEventListener(
+        "resize",
+        handleScroll
+      );
+    };
+  }, []);
+
+
+  /* =========================================================
+     LOCK BODY WHEN MOBILE MENU IS OPEN
+  ========================================================= */
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow =
+        "hidden";
+    } else {
+      document.body.style.overflow =
+        "";
+    }
+
+    return () => {
+      document.body.style.overflow =
+        "";
+    };
+  }, [menuOpen]);
+
+
   return (
-    <header className="navbar">
+    <header
+      className={`navbar ${
+        scrolled
+          ? "navbar--scrolled"
+          : ""
+      }`}
+    >
+
+      {/* =================================================
+          SCROLL PROGRESS
+      ================================================= */}
+
+      <div
+        className="navbar__progress"
+        aria-hidden="true"
+      >
+        <span
+          style={{
+            width: `${scrollProgress}%`,
+          }}
+        ></span>
+      </div>
+
+
       <div className="navbar__inner">
 
-        {/* =========================
+        {/* =================================================
             BRAND
-        ========================== */}
+        ================================================= */}
 
         <a
           href="#home"
@@ -50,9 +259,9 @@ function Navbar() {
         </a>
 
 
-        {/* =========================
-            DESKTOP / MOBILE NAV
-        ========================== */}
+        {/* =================================================
+            NAVIGATION
+        ================================================= */}
 
         <nav
           className={`navbar__nav ${
@@ -61,27 +270,20 @@ function Navbar() {
               : ""
           }`}
         >
-          <a
-            href="#work"
-            onClick={closeMenu}
-          >
-            <BriefcaseBusiness
-              size={15}
-              strokeWidth={1.7}
-            />
 
-            <span>
-              Work
-            </span>
-          </a>
-
+          {/* PROFILE */}
 
           <a
             href="#profile"
             onClick={closeMenu}
+            className={
+              activeSection === "profile"
+                ? "navbar__link--active"
+                : ""
+            }
           >
             <UserRound
-              size={15}
+              size={17}
               strokeWidth={1.7}
             />
 
@@ -91,12 +293,41 @@ function Navbar() {
           </a>
 
 
+          {/* WORK */}
+
+          <a
+            href="#work"
+            onClick={closeMenu}
+            className={
+              activeSection === "work"
+                ? "navbar__link--active"
+                : ""
+            }
+          >
+            <BriefcaseBusiness
+              size={17}
+              strokeWidth={1.7}
+            />
+
+            <span>
+              Work
+            </span>
+          </a>
+
+
+          {/* EXPERIENCE */}
+
           <a
             href="#experience"
             onClick={closeMenu}
+            className={
+              activeSection === "experience"
+                ? "navbar__link--active"
+                : ""
+            }
           >
             <Clock3
-              size={15}
+              size={17}
               strokeWidth={1.7}
             />
 
@@ -106,12 +337,19 @@ function Navbar() {
           </a>
 
 
+          {/* CONTACT */}
+
           <a
             href="#contact"
             onClick={closeMenu}
+            className={
+              activeSection === "contact"
+                ? "navbar__link--active"
+                : ""
+            }
           >
             <Mail
-              size={15}
+              size={17}
               strokeWidth={1.7}
             />
 
@@ -121,15 +359,16 @@ function Navbar() {
           </a>
 
 
+          {/* RESUME */}
+
           <a
             href="/Sajid-Ul-Islam-CV.pdf"
             className="navbar__resume"
-            target="_blank"
-            rel="noreferrer"
+            download="Sajid-Ul-Islam-CV.pdf"
             onClick={closeMenu}
           >
             <FileText
-              size={15}
+              size={17}
               strokeWidth={1.7}
             />
 
@@ -138,17 +377,18 @@ function Navbar() {
             </span>
 
             <ArrowUpRight
-              size={14}
+              size={15}
               strokeWidth={1.8}
               className="navbar__resume-arrow"
             />
           </a>
+
         </nav>
 
 
-        {/* =========================
-            RIGHT CONTROLS
-        ========================== */}
+        {/* =================================================
+            CONTROLS
+        ================================================= */}
 
         <div className="navbar__controls">
 
@@ -156,6 +396,7 @@ function Navbar() {
 
 
           <button
+            type="button"
             className="navbar__menu-button"
             onClick={() =>
               setMenuOpen(
@@ -165,6 +406,7 @@ function Navbar() {
             aria-label="Toggle navigation"
             aria-expanded={menuOpen}
           >
+
             {menuOpen ? (
               <X
                 size={22}
@@ -176,11 +418,13 @@ function Navbar() {
                 strokeWidth={1.6}
               />
             )}
+
           </button>
 
         </div>
 
       </div>
+
     </header>
   );
 }
