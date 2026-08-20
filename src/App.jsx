@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar/Navbar";
 import Additional from "./sections/Additional/Additional";
 import Background from "./sections/Background/Background";
+import Contact from "./sections/Contact/Contact";
 import Experience from "./sections/Experience/Experience";
 
 import Hero from "./sections/Hero/Hero";
@@ -21,6 +22,7 @@ function App() {
         <Additional />
         <Research />
         <Background />
+        <Contact />
       </main>
     </>
   );
